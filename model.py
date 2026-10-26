@@ -64,8 +64,19 @@ def append_column(X, col):
     col_2d = col.reshape(-1, 1)
     return np.hstack((X, col_2d))
 
-# Step 6 - one_hot_encode (not yet solved)
-# TODO: implement
+# Step 6 - one_hot_encode
+def one_hot_encode(labels):
+    # TODO: Convert a 1-D array of categorical labels into a dense binary one-hot matrix.
+    labels = np.asarray(labels)
+    # extract unique labels
+    uniques = np.unique(labels)
+    # build binary mask
+    # trick: broacasting
+    # lables (N,1) -- uniques(1,K) --> (N,K)
+    mask = labels[:, None] == uniques[None, :]
+    # build one hot encoded features
+    one_hot = np.where(mask, 1.0, 0.0).astype(float)
+    return one_hot
 
 # Step 7 - fit_standardizer (not yet solved)
 # TODO: implement
