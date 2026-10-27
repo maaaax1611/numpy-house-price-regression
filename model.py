@@ -257,11 +257,16 @@ def evaluate_predictions(y_true, y_pred):
 
 # Step 24 - house_price_pipeline
 def house_price_pipeline(X, y, ratio_num_idx, ratio_den_idx, cat_labels=None, train_ratio=0.7, val_ratio=0.15, seed=42, iqr_k=1.5):
+    # clean the data
     X_clean = prepare_cleaned_features(X, iqr_k)
+    # compute features
     X_feat = assemble_feature_matrix(X_clean, ratio_num_idx, ratio_den_idx, cat_labels)
+    # make splits
     splits = make_train_val_test(X_feat, y, train_ratio, val_ratio, seed)
+    # standardize data
     std_splits, mean, std = standardize_and_add_bias(splits)
 
+    # fit model and predict on val and test set
     theta = ols_fit(std_splits['X_train'], std_splits['y_train'])
     y_val_pred = ols_predict(std_splits['X_val'], theta)
     y_test_pred = ols_predict(std_splits['X_test'], theta)
