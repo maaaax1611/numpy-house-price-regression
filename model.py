@@ -163,8 +163,18 @@ def root_mean_squared_error(y_true, y_pred):
     mean = np.mean(residuals)
     return np.sqrt(mean)
 
-# Step 17 - r_squared (not yet solved)
-# TODO: implement
+# Step 17 - r_squared
+def r_squared(y_true, y_pred):
+    # TODO: Compute R^2 = 1 - SS_res/SS_tot (return 0.0 if SS_tot is 0)...
+    y_true = np.asarray(y_true, dtype=float)
+    y_pred = np.asarray(y_pred, dtype=float)
+    # calc
+    ss_res = np.sum((y_true - y_pred) ** 2)
+    ss_tot = np.sum((y_true - np.mean(y_true)) ** 2)
+    if ss_tot == 0.0:
+        return 0.0
+    r_sqrd = 1 - (ss_res / ss_tot)
+    return r_sqrd
 
 # Step 18 - residual_summary (not yet solved)
 # TODO: implement
